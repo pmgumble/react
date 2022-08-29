@@ -18,43 +18,37 @@ import { Link } from 'react-router-dom';
         );
     }
 
-    function RenderComments(comments){
-        if(comments == null){
+    function RenderComments(props){
+        if(props.comments == null){
             return(<div></div>);
         }
-        // const showcmnts = comments.map((cmnt) => {
+        const showcmnts = props.comments.map((cmnt) => {
             return(
-                // <li key={cmnt.id}>
-                //     <p>{cmnt.comment}</p>
-                //     <p>--{cmnt.author},
-                //     &nbsp;
-                //     {new Intl.DateTimeFormat('en-US', {
-                //             year: 'numeric',
-                //             month: 'short',
-                //             day: '2-digit'
-                //         }).format(new Date(cmnt.date))}
-                //     </p>
-                // </li>
-                <div className="col-12 col-md-5 m-1">
-                    <h4>Comments</h4>
-                    <ul className="list-unstyled">
-                        {comments.map((comment) => {
-                    return (
-                        <li key={comment.id}>
-                        <p>{comment.comment}</p>
-                        <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {
-                             year: 'numeric',
-                             month: 'short',
-                             day: '2-digit'
-                            }).format(new Date(comment.date))}</p>
-                        </li>
-                    );
-                        })}
-                    </ul>
-                </div>
+                
+                <li key={cmnt.id}>
+                    <p>{cmnt.comment}</p>
+                    <p>--{cmnt.author},
+                    &nbsp;
+                    {new Intl.DateTimeFormat('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: '2-digit'
+                        }).format(new Date(cmnt.date))}
+                    </p>
+                </li>
             );
-        
+        });
+
+        return (
+            <div className='col-12 col-md-5 m-1'>
+                <h4> Comments </h4>
+                <ul className='list-unstyled'>
+                    {showcmnts}
+                </ul>
+            </div>
+        );
     }
+
     const DishDetail = (props) => {
         if (props.dish !=null)
         return (
@@ -70,7 +64,7 @@ import { Link } from 'react-router-dom';
                     </div>                
                 </div>
                 <div className="row">
-                    <div className="col-12 col-md-5 m-1">
+                    <div>
                         <RenderDish dish={props.dish} />
                         <RenderComments comments={props.comments} />
                     </div>
