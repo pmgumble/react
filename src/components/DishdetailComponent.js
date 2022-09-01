@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { baseUrl } from '../shared/baseUrl';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -91,26 +92,35 @@ export class CommentForm extends Component {
     function RenderDish({dish}){
         return(
             <div className='col-12 col-md-5 m-1'>
+            <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
                 <Card>
-                <CardImg top src={baseUrl + dish.image} alt={dish.name} />                    
+                    <CardImg top src={baseUrl + dish.image} alt={dish.name} />
                     <CardBody>
                         <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
+            </FadeTransform>
             </div>
         );
     }
 
     function RenderComments({ comments, postComment, dishId }) {
+    
         var commentList = comments.map(comment => {
             return (
+            
                 <li key={comment.id} >
                     {comment.comment}
                     <br /><br />
                     -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
                     <br /><br />
                 </li>
+            
             );
         });
 
@@ -123,6 +133,7 @@ export class CommentForm extends Component {
                 <CommentForm dishId={dishId} postComment={postComment}/>
             </div>
         );
+    
     }
 
     // function RenderComments(props){
